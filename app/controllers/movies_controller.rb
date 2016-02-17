@@ -12,7 +12,13 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
-  end
+    sort = params[:sort]
+    if not sort.nil? then
+       @movies = Movie.all.sort_by { |movie| movie.title }
+    end
+    order = params[:order]
+    @order = (order.nil? || order == 'desc') ? 'asc' : 'desc'
+  end 
 
   def new
     # default: render 'new' template
