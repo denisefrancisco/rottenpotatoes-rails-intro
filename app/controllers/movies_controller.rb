@@ -17,7 +17,6 @@ class MoviesController < ApplicationController
        @movies = Movie.all.sort_by { |movie| movie.title }
     end
     order = params[:order]
-    @order = (order.nil? || order == 'desc') ? 'asc' : 'desc'
   end 
 
   def new
