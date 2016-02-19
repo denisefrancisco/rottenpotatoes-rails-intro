@@ -11,7 +11,7 @@
 
 %table#movies
   %thead
-    %tr
+    %trs
       %th{:class => ("hilite" if params[:sort] == 'title')}
         = link_to "Movie Title", movies_path(sort: 'title'), {:id => "title_header"}
       //%link href="../app/assets/stylesheets/default.css"
