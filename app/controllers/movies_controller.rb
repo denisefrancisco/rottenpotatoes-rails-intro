@@ -18,7 +18,6 @@ class MoviesController < ApplicationController
     elsif sort == 'release_date' then
        @movies = Movie.all.sort_by { |movie| movie.release_date } 
     end
-    order = params[:order]
   end 
 
   def new
