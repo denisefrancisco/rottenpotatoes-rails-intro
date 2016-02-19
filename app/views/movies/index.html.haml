@@ -17,7 +17,7 @@
       //%link href="../app/assets/stylesheets/default.css"
       %th Rating
       %th{:class => ("hilite" if params[:sort] == 'release_date')}
-        = link_to 'Release Date', movies_path(sort: 'release_date')
+        = link_to 'Release Date', movies_path(sort: 'release_date'), {:id => "release_date_header"}
       %th More Info
   %tbody
     - @movies.each do |movie|
