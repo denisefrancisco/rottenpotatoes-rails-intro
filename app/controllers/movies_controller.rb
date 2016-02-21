@@ -12,9 +12,11 @@ class MoviesController < ApplicationController
 
   def index
     #session[:sort] = ''
-    #session[:ratings] = params[:ratings]
+    #session[:ratings] = params[:rating]
     @movies = Movie.all
     @all_ratings = Movie.all_ratings
+    redirect_flag1 = false
+    redirect_flag2 = false
     #want to store in session hash: ratings and sort
     
     # filter by ratings
@@ -23,10 +25,13 @@ class MoviesController < ApplicationController
       session[:ratings] = params[:ratings]
       @movies = Movie.where(rating: @ratings)
       #flash[:notice] = "#{@ratings} was successfully created."
-    elsif session[:rating] == nil then
+    elsif session[:ratings] == nil then
       @ratings = @all_ratings
+      flash[:notice] = "#{session[:ratings]} set for sessions ratings"
     else
       params[:ratings] = session[:ratings]
+      redirect_flag1 = true
+      flash[:notice] = "#{params[:ratings]} set for params ratings"
       @ratings = params[:ratings].keys
       #flash[:notice] = "#{@ratings} is default."
       #session[:current_user_id] = @user.id
@@ -36,8 +41,9 @@ class MoviesController < ApplicationController
     # sort by release or movie title
     @title_header = ""
     @release_header = ""
-    if params[:sort] == nil then
+    if params[:sort] == nil and session[:sort] != '' then
       params[:sort] = session[:sort]
+      redirect_flag2 = true
     end
     sort = params[:sort]
     if sort == 'title' then
@@ -48,7 +54,24 @@ class MoviesController < ApplicationController
        @movies = @movies.sort_by { |movie| movie.release_date } 
     end
     session[:sort] = sort
-    flash[:notice] = "#{session[:ratings]} are the ratings and #{session[:sort]} is the sorting."
+    
+#=begin
+    if redirect_flag1 == true and redirect_flag2 == true then
+      flash[:notice] = "flag 1 and 2: params = #{params[:sort]}, #{params[:ratings]}, session = #{session[:sort]}, #{session[:ratings]}"
+      redirect_to url_for(sort: params[:sort], ratings: params[:ratings]) #and return
+    elsif redirect_flag1== true and params[:rating] == nil then
+      flash[:notice] = "flag 1 only: params = #{params[:sort]}, #{params[:ratings]}, session = #{session[:sort]}, #{session[:ratings]}"
+      redirect_to url_for(ratings: params[:ratings]) #and return
+    elsif redirect_flag2 == true and params[:sort] == nil  then
+      flash[:notice] = "flag 2 only"
+      redirect_to url_for(sort: params[:sort]) #and return
+    elsif (redirect_flag1 == true or redirect_flag2 == true) and (params[:sort] != nil and params[:rating] != nil) then
+      flash[:notice] = "flag 1 and 2: params = #{params[:sort]}, #{params[:ratings]}, session = #{session[:sort]}, #{session[:ratings]}"
+      redirect_to url_for(sort: params[:sort], ratings: params[:ratings]) #and return
+    end
+#=end
+    
+    #flash[:notice] = "#{session[:ratings]} are the ratings--- and #{session[:sort]} is the sorting. --- and #{params[:ratings]} are the ratings params."
   end 
 
   def new
