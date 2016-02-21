@@ -11,25 +11,44 @@ class MoviesController < ApplicationController
   end
 
   def index
+    #session[:sort] = ''
+    #session[:ratings] = params[:ratings]
     @movies = Movie.all
     @all_ratings = Movie.all_ratings
+    #want to store in session hash: ratings and sort
+    
+    # filter by ratings
     if params[:ratings] != nil then
       @ratings = params[:ratings].keys
+      session[:ratings] = params[:ratings]
       @movies = Movie.where(rating: @ratings)
-      flash[:notice] = "#{@ratings} was successfully created."
-    else
+      #flash[:notice] = "#{@ratings} was successfully created."
+    elsif session[:rating] == nil then
       @ratings = @all_ratings
-      flash[:notice] = "#{@ratings} is default."
+    else
+      params[:ratings] = session[:ratings]
+      @ratings = params[:ratings].keys
+      #flash[:notice] = "#{@ratings} is default."
+      #session[:current_user_id] = @user.id
+      #flash[:notice] = "#{@user.id} is the user."
     end
     
-    sort = params[:sort]
-    #ratings = params[:ratings]
-    #@ratings = ratings.nil? ? Movie.all_ratings : ratings.keys
-    if sort == 'title' then
-       @movies = Movie.all.sort_by { |movie| movie.title }
-    elsif sort == 'release_date' then
-       @movies = Movie.all.sort_by { |movie| movie.release_date } 
+    # sort by release or movie title
+    @title_header = ""
+    @release_header = ""
+    if params[:sort] == nil then
+      params[:sort] = session[:sort]
     end
+    sort = params[:sort]
+    if sort == 'title' then
+       @title_header = "hilite"
+       @movies = @movies.sort_by { |movie| movie.title }
+    elsif sort == 'release_date' then
+       @release_header = "hilite"
+       @movies = @movies.sort_by { |movie| movie.release_date } 
+    end
+    session[:sort] = sort
+    flash[:notice] = "#{session[:ratings]} are the ratings and #{session[:sort]} is the sorting."
   end 
 
   def new
