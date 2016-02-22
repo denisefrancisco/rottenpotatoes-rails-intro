@@ -36,19 +36,19 @@ class MoviesController < ApplicationController
     end
     
     # sort by release or movie title
-    @title_headers = ""
-    @release_headers = ""
+    @title_header = ""
+    @release_header = ""
     if params[:sort] == nil and session[:sort] != nil then
       params[:sort] = session[:sort]
       redirect_flag2 = true
     end
     sort = params[:sort]
     if sort == 'title' then
-       @title_headers = "hilite"
+       @title_header = "hilite"
        @movies = @movies.sort_by { |movie| movie.title }
        session[:sort] = sort
     elsif sort == 'release_date' then
-       @release_headers = "hilite"
+       @release_header = "hilite"
        @movies = @movies.sort_by { |movie| movie.release_date } 
        session[:sort] = sort
     end
