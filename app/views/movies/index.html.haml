@@ -12,8 +12,7 @@
 %table#movies
   %thead
     %trs
-      %th{:class => @title_header }
-        = link_to "Movie Title", movies_path(sort: 'title'), {id: "title_header"}
+      %th{:class => @title_header }= link_to 'Movie Title', movies_path(:sort => 'title'), {:id => 'title_header'}
       //%link href="../app/assets/stylesheets/default.css"
       %th Rating
       %th{:class => @release_header}

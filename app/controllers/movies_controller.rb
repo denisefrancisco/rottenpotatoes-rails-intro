@@ -30,7 +30,7 @@ class MoviesController < ApplicationController
     else
       if params[:ratings] != session[:ratings] then
         params[:ratings] = session[:ratings]
-        redirect_flag1 = true
+        redirect_flag1 = truecd rot
       end
       @ratings = params[:ratings].keys
     end
@@ -44,11 +44,11 @@ class MoviesController < ApplicationController
     end
     sort = params[:sort]
     if sort == 'title' then
-       @title_header = "hilite"
+       @title_header = 'hilite'
        @movies = @movies.order("title") #{ |movie| movie.title }
        session[:sort] = sort
     elsif sort == 'release_date' then
-       @release_header = "hilite"
+       @release_header = 'hilite'
        @movies = @movies.order("release_date") #sort_by { |movie| movie.release_date } 
        session[:sort] = sort
     end
