@@ -27,6 +27,7 @@ class MoviesController < ApplicationController
       @movies = Movie.where(rating: @ratings)
     elsif session[:ratings] == nil then
       @ratings = @all_ratings
+      session[:ratings] = @ratings
     else
       if params[:ratings] != session[:ratings] then
         params[:ratings] = session[:ratings]
