@@ -45,11 +45,11 @@ class MoviesController < ApplicationController
     sort = params[:sort]
     if sort == 'title' then
        @title_header = "hilite"
-       @movies = @movies.sort_by { |movie| movie.title }
+       @movies = @movies.order("title") #{ |movie| movie.title }
        session[:sort] = sort
     elsif sort == 'release_date' then
        @release_header = "hilite"
-       @movies = @movies.sort_by { |movie| movie.release_date } 
+       @movies = @movies.order("release_date") #sort_by { |movie| movie.release_date } 
        session[:sort] = sort
     end
     
