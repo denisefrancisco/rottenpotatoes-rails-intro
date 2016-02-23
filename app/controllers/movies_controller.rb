@@ -30,7 +30,7 @@ class MoviesController < ApplicationController
     else
       if params[:ratings] != session[:ratings] then
         params[:ratings] = session[:ratings]
-        redirect_flag1 = truecd rot
+        redirect_flag1 = true
       end
       @ratings = params[:ratings].keys
     end
