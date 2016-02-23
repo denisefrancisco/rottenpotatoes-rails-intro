@@ -13,7 +13,7 @@ class MoviesController < ApplicationController
   end
 
   def index
-    session.clear
+    #session.clear
     @movies = Movie.all
     @all_ratings = Movie.all_ratings
     redirect_flag1 = false
