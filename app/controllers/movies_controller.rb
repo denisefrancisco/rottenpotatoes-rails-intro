@@ -57,15 +57,15 @@ class MoviesController < ApplicationController
     if session[:sort] != nil and session[:ratings] !=nil then
       if redirect_flag1 == true and redirect_flag2 == true then
         #puts "flag 1 and 2: params = #{params[:sort]}, #{params[:ratings]}, session = #{session[:sort]}, #{session[:ratings]}"
-        redirect_to url_for(sort: params[:sort], ratings: params[:ratings]) #and return
+        #redirect_to url_for(sort: params[:sort], ratings: params[:ratings]) #and return
       elsif redirect_flag1 == true and params[:sort] == nil then
         #puts "flag 1 only: params = #{params[:sort]}, #{params[:ratings]}, session = #{session[:sort]}, #{session[:ratings]}"
-        redirect_to url_for(ratings: params[:ratings]) #and return
+        #redirect_to url_for(ratings: params[:ratings]) #and return
       elsif  redirect_flag2 == true and params[:ratings] == nil  then
         #puts "flag 2 only"
-        redirect_to url_for(sort: params[:sort]) #and return
+        #redirect_to url_for(sort: params[:sort]) #and return
       elsif (redirect_flag1 == true or redirect_flag2 == true) then
-        redirect_to url_for(sort: params[:sort], ratings: params[:ratings]) #and return
+        #redirect_to url_for(sort: params[:sort], ratings: params[:ratings]) #and return
       end
     end
 #=end
